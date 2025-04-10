@@ -1,0 +1,23 @@
+{
+  "name": "ambulance-booking-system",
+  "version": "1.0.0",
+  "description": "Ambulance Booking System with Express backend and Quasar frontend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node start-dev.js",
+    "start": "node run-app.js",
+    "backend": "cd backend && node server.js",
+    "frontend": "cd quasar-project && npm run dev",
+    "build": "cd quasar-project && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ambulance",
+    "booking",
+    "express",
+    "quasar",
+    "vue"
+  ],
+  "author": "",
+  "license": "ISC"
+}
