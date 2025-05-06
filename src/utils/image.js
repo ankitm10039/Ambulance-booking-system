@@ -1,0 +1,45 @@
+/**
+ * Utility functions for handling images
+ */
+
+// Base URL for the backend server (without /api since static files are served from root)
+const API_BASE_URL = 'http://localhost:5000'
+
+/**
+ * Format image URL by adding the backend base URL if needed
+ * @param {string} imagePath - The image path from the API
+ * @param {string} defaultImage - The default image to use if no image is provided
+ * @returns {string} - The complete image URL
+ */
+export function getImageUrl(imagePath, defaultImage = 'https://via.placeholder.com/150?text=No+Image') {
+  if (!imagePath) {
+    return defaultImage
+  }
+  
+  // Check if the image path is already a full URL
+  if (imagePath.startsWith('http')) {
+    return imagePath
+  }
+  
+  // If the path starts with a slash, use it as is, otherwise add one
+  const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`
+  
+  // Prepend the backend URL
+  return `${API_BASE_URL}${normalizedPath}`
+}
+
+/**
+ * Get a default avatar image
+ * @returns {string} - The default avatar URL
+ */
+export function getDefaultAvatar() {
+  return 'https://cdn.quasar.dev/img/avatar.png'
+}
+
+/**
+ * Get a default vehicle image
+ * @returns {string} - The default vehicle URL
+ */
+export function getDefaultVehicleImage() {
+  return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABUFBMVEX////m5ubMzMzCJy+ZmZmAgIDt7e1mZmbHr5XIsZnMzMrIr5fCJy7xWiXJvrHEJCrh18q4MTTt4OHR0dGrCxZ3d3fn5ebJycmSkpK4LjDx8fG9y9Tm5uStFBvfxsbs4eHjwcTlu8FdXV1ra2t0dHS7u7vd3d2yIynknn/asKPDV1eoqKi6Eh/DW16sDhGdnZ2yAADdm5/yUxPLb3Hlu8L4kx3szsuipaq1tbXiu7nSzsjbnYmKh4BVVVWJiYn8697ru6nki2j/+vHdVSDtTgDcYDHtuKPfdlrik3nnqpHxy7bcTA7969vielHjRwDgrZ/avKzRi4yxPULLe3/jq63LZ2u6NT/63NfSoaHGGiDNkpDHT1bdm6H61titKS2/AxPVx63isHXomT7plS3ak2viok7cuIz6qjb8sTzvkiLsmzr9kRTexKHjp2Ovp6Hl2s5Wh7DpAAAK4ElEQVR4nO2c+3/SWBbAG6BBWmoskcBguowJj64gFGsrrWOdqc7MOruj9rGtuK5F66tbR///3/aee5NAYkJeN1D7OV8U5dGcfHPOublJCnNzCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgyFR5+PPqL6t/7M56NRJjd/XR4ztLdx7/+tus1yQhdn+/s8R4+o9LmcbdX0zBpaU7T2a9Nknwx+OlEf/816xXJwH+HBO8lEncfWoz/P3ydeJDm+HSr2j4/bH79A7w2ODPy2dY+fs4z57Pen24I5RSIxbIH3nWa8SbEmiNU1JnvUp8qZRSThqzXie+XEbDSkVMmkqlMju9xO3GNC+3H2PqfhXKpXUUG6k6UErJDUEUoqIKiqqqiqAQVPKAPOGGpTi1Wm30M+VyOUMg/5S7fTmqoQJ/FSIGesqkd041jUKLyo1R7spR80iSptLEwf1Eyemlse70o471SIqKKlYLm4SCKCrM19cxaUWx6yZIFKNUqlg4XD9qd8iteWvvxyp05cwVG+5+hG7wJNKuU1Wx0FtuS3kpn07n89KgffumSBtTnVCriSvKnoKZciOwIfUQxK39NtiBH/mbTkud9WP62qREJqxYKmc8FYOXKctRtdeRJLCjkvTf/OD1FlTCxFJNdEQlY8y9Gzdu9N0NS8ENiaN4cJJP09zlJUnKm2m8fij69GKSioagh2I5FdSQoIh7HQmU0tK/1ynMNp0PqJhIncJeok8Nb8QeTNWtDmSQpG5lk+bk4ZGUZllsbvr+dEJJLEEH1plhN85IQ4pUKFAhcGqDkKJUj/LGE9J+Fd6lqBMymUgSqWCm5Z3DTEBBupvfa6dHhgrcTMN0ut2D0cZrippYEs3dBE3ivXiGqnDclEzDDs2hUF22DKVmwXcR/JPIdvRQnPf6LbcaJS8GNxR7ZgqNHAqWIQyq7cPJk3BDkaugCIL3PBowrKGqiLckmMXATkLqbNLdI2lMBgw2t6u+C+GdRGrg3YGUVtBZGynSFZKp5VuMTXBWxNvGQxhgOwWf/QVV5GnYAoMJY0w4Q0HYapPkrRunB0ZJAY7XSKWebE2cm5rv5yfYL8PRETP0npf2gxu+GJCdwrrolqjCGkkijKZ+rcjTMGU2oecoSgl+gCi+ZIaCiwQ1lPZEwe1FhyKvMhXKVhNOEgw+LaWGaTB0wTQkswLfuRsnw0pm1IR1b8EwkzY/wzTN4dQM6ShT9xtmwh0evqCGbKSxPNhIU1iDfX5P9B1puBmWxppwws4wE2JKQ8ZS6MP/9F71Xr3qvSzAPFVQyCNKm0y/T24GWQofQyHYKENoBfZThP92YALTpqzRealafc0etmFWs3YMJeo71HAxDNiEmTBDqapW96W0ccxLZm30IMKatZGbtC/CMfJUDKEJywGaMFQbqqq6N7B82ptw1lsdzbzz6UFPUfz7kIuhHLgJQ8y7aZk2rdMzZOatwjn95TwFUrhyDFn1nbhxMKwEbsIwe0O6cgdt60CCGJLb2NFT+0D0voLB13BsOup+8mmMUIIKOUA0T0PBMT7pRPMYn6Tw9XHAzRTbcHxH4T0djZBCOBl8uMaOgaXr7DxNxTTMdw4DjlmxDWmNGoY+TVgOcVwhQIeRQ8SDdp6dazvYo/xgGJ7sBV1WbMMWW/sATRhiXwgocL5Uqa4PjDJlsJFHgiaceBKKn6FoFGa3X/cbZfqhBNlpNFUoHHSYonGjgp2XRNB/R8HF0PsSjLNCQ186pIbQi80By5yhKA2OtkIsK6ahKMitbtnOuBej2yo1ol4aVRTx+KAzMPf9eenkda8QZmHxDCuwBLqcBiDLqVKpVLcgD1Ky3BBiXMGHS/iCeNy73TwBOsvrh2wOPiXD6CseGHpVW4BLwDdfvNiCi8D0lFTwBcQyTM7LQjFONsEdqwTV9xKwnTiGlQSMnNDfLaGeTEv1v4zvII5hqEC2lf6Wb8tOsWC/fBGiMMeDxTEUq9VqoQB/KAWg6klhdFegPzW6Yz+aGNWIfpXeraOj5Vj8MPofL5oG48+tRxM83m8bl9eTQuLF7UiCu+xarHWwdkFw2VDpdDTD9UE6nU7Yzz/NQZaRjpbDFycXLXve5KMYFqxrs98BkQxfDr6fFEYz3JeS7kGORDHcbV52w+qK1Ya+49l0t8TYEGutWRTDAv1dwTxbnjTRMm8f883f2XIO+sZ5Cvp24y5vX4x1BiOoqxUkyt5ic6UZgZXmSkiuW9iftb1ko8Mw/+3Qt0YwrPwtPj8G5KYLd+/edXuasOXg2X1ClI/+sY/UEa4NPw+3v/kMkycL/u+guP0ge2H8LmXcTYh2NUcYRjOEhQ/fvN0433g7DK4YChdTj/c5Ngo8ok/IYLgYxZB+9Gz7zSnxI7y/FiA504Wuz/Nn91ffvXu3GskQEvie+W1snH+4iIbbTx4Z39qwGskwNXx7fvbx4xk1fG8s9OJA2vP5I/PD/lEMF1Lb7zfOPn389Ikm8TTEYDMVYGs/s753I1IOUx/Ozz4RPrI6vWCGdNy5H8+QpPAjCNIq3TjbvlhFysEwdfV0g3ShkcGN/10wQ7qjjJnD4enGGG9Sk3a8M4CsjBy7Ss8tv/PT4cXyY1OgeIYLqc+n55bg55SzSGXKFFQgikuo+H1IlvDZ2OGf/TVM2YpUluvd+aJeK5ZbpWQlSaTMvJ7N6sVy3y7JYSwlo9X28MObv958vmrkz1Ls6lpWywKaNl9P0FFu6RoLREJlu5wNPaP2dU0vzteyZuSdxPzqNS2r10aR9L59az43J22R5jSeYTNabR7IjkgmjXKL+NkjaV17pT4xp21RvoSq5MAMW9ao3yiHEDgJRRAsOrelljEisYFOvvbbKvBkGF6wUiva2GFLlrtUsKhn7XjWdHTBvqZ/symJYouuSIu5mxT7EXI4b8cwrFNB8IMtULNE5/knkSwUQmkkkm2T0o3ZdxiWIhhm3AzlYo1VjRmgaG1azhMC1g3FUaR50xHWRO7b164Y5Yth6vattCPDeQSawizbuvbANdk4/8IHkkKdhhpbC6NcNUiiw3A+ylXuitMQNuyOTgPZXjEHmwV2ysh2NzqTFO5pGGaKsPVsK1GzxtMFh2ErguDcnL2Zd64CEJHky14hTDFzlSs/wWZkOwvnxiySl7/Ynq9F/FSQbSE/5RavXMmxInVUCIsLbyA3PlzJ6bRa7HVkdkQul7MZRhpJAWF8+UQgl1vUXDasEbeW4wcJBYWiO7el0Ym5K3bDckTBubnGmCIxXPQxXKQrxwUPQ9YQmj2HxeiC8EEnq+VoDt2rNIEcLk4yzJJ+sAyLtaglaqaxW2STmwB9eIUbpA9r3n2ok0hf2EyrNt+K/9HDSoPuCbevEb6yfZTbWKp9+XqNI1+7WTB0HUt3SKRt+pufCXwDXEun3e6yYR/w/sS4Zp/RjCJpC3wj2REfsDr5Jmx2h3eomk6Lw2VOwzuSnbJxxO2cLT7gXi+pB8Z00BFJq/OOZEc0zynothm/1uUfascKZTuKKfKPZMfctHZqCUSquAXKakICoezU3RQT+YoYq17GBafx/Zklp6KWVOFUag5HTU8+g4A4P+6oaTEnFZPoa9p4pGgHSVFo7GgaxCZ3eivRr0yr9HXNQOcwfQkTWYavS+zWp9AWQqnfbfVL06lPBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEEQBEGQy8//AVgDKEjFQ8pbAAAAAElFTkSuQmCC'
+}
